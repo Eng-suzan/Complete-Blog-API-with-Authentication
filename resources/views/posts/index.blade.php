@@ -50,7 +50,9 @@
                         <td>{{ $post->title }}</td>
                         <td>{{ Str::limit($post->content, 50) }}</td>
                         <td>{{ $post->user->name ?? '-' }}</td>
-                        <td>{{ $post->category->name ?? '-' }}</td>
+                       <td>
+    {{ $post->categories->pluck('name')->join(', ') ?: '-' }}
+</td>
 
                         <td>
 

@@ -10,14 +10,14 @@ use App\Models\User;
 class Post extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'content', 'user_id', 'category_id'];
+    protected $fillable = ['title', 'content', 'user_id'];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);//1 to 1 relationship with user
     }
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class);//many to many relationship with category
     }
 }

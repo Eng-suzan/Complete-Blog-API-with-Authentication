@@ -44,11 +44,11 @@
             {{-- Category --}}
             <div class="mb-3">
                 <label>Category</label>
-                <select name="category_id" class="form-control">
+                <select name="category_id[]" multiple class="form-control">
 
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}"
-                            {{ $post->category_id == $category->id ? 'selected' : '' }}>
+                            {{ $post->categories->contains($category) ? 'selected' : '' }}>
                             {{ $category->name }}
                         </option>
                     @endforeach

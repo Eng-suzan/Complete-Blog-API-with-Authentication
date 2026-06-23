@@ -36,6 +36,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th width="220">Actions</th>
+                    <th>Posts</th>
                 </tr>
             </thead>
 
@@ -46,7 +47,7 @@
                     <tr>
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>
-
+                        
                         <td>
 
                             <a href="{{ route('categories.edit',$category->id) }}"
@@ -69,12 +70,20 @@
                             </form>
 
                         </td>
+<!-- <td>{{ $category->posts->count() }}</td> -->
+                        <td>
+                            {{ $category->posts->count() }}
+    <a href="{{ route('categories.show', $category->id) }}"
+       class="btn btn-primary btn-sm">
+        ->Show Posts
+    </a>
+</td>
                     </tr>
 
                 @empty
 
                     <tr>
-                        <td colspan="3" class="text-center">
+                        <td colspan="4" class="text-center">
                             No Categories Found
                         </td>
                     </tr>

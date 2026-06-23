@@ -47,7 +47,7 @@
             </div>
             <div class="mb-3">
                 <label>Category</label>
-                <select name="category_id" class="form-control">
+                <select name="category_id[]" multiple class="form-control">
                     <option value="">-- Select Category --</option>
 
                     @foreach($categories as $category)
