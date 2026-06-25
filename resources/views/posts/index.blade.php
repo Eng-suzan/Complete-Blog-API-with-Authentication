@@ -37,6 +37,8 @@
                     <th>Content</th>
                     <th>User</th>
                     <th>Category</th>
+                    <th>Featured</th>
+                    <th>Comments</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -52,6 +54,24 @@
                         <td>{{ $post->user->name ?? '-' }}</td>
                        <td>
     {{ $post->categories->pluck('name')->join(', ') ?: '-' }}
+</td>
+                       <td>
+    @if($post->is_featured)
+        <span class="badge bg-warning text-dark">
+            ⭐ Featured
+        </span>
+    @else
+        <span class="badge bg-secondary">
+            Not Featured
+        </span>
+
+    @endif
+</td>
+<td>
+    <a href="{{ route('posts.show', $post->id) }}"
+       class="btn btn-info btn-sm">
+       {{ $post->comments->count() }} Comments
+    </a>
 </td>
 
                         <td>
@@ -91,11 +111,25 @@
             </tbody>
 
         </table>
-
+        
         {{-- Pagination --}}
         <div class="mt-3">
             {{ $posts->links() }}
         </div>
+        <h2>Featured Posts</h2>
+
+@foreach($featuredPosts as $post)
+
+<div class="card mb-2">
+    <div class="card-body">
+
+        <h4>{{ $post->title }}</h4>
+
+    </div>
+</div>
+
+@endforeach
+
 
     </div>
 </div>

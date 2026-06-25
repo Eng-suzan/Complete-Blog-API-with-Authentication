@@ -37,9 +37,17 @@
     <div class="container">
         <a class="navbar-brand" href="#">Laravel CRUD</a>
 <div class="ms-auto">
+    
             <a href="{{ route('posts.index') }}"
                class="btn btn-light btn-sm me-2">
                 Posts
+            </a>
+        </div>
+        <div class="ms-auto">
+    
+            <a href="{{ route('dashboard.index') }}"
+               class="btn btn-light btn-sm me-2">
+                Dashboard
             </a>
         </div>
         <div class="ms-auto">

@@ -40,6 +40,20 @@
 
                 </select>
             </div>
+            
+            {{-- Featured Post --}}
+            <div class="form-check mb-3">
+                <input
+                    type="checkbox"
+                    name="is_featured"
+                    value="1"
+                    class="form-check-input"
+                    {{ $post->is_featured ? 'checked' : '' }}>
+
+                <label class="form-check-label">
+                    Featured Post
+                </label>
+            </div>
 
             {{-- Category --}}
             <div class="mb-3">

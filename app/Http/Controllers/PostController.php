@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\User;
+use App\Models\Comment;
 
 
 use Illuminate\Http\Request;
@@ -24,14 +25,17 @@ public function store(Request $request)
         'title' => 'required|min:3',
         'content' => 'required',
         'user_id' => 'required',
+        'is_featured' => 'boolean',
         'category_id' => 'required|array',
         'category_id.*' => 'exists:categories,id',
+
     ]);
 
     $post = Post::create([
         'title' => $request->title,
         'content' => $request->content,
         'user_id' => $request->user_id,
+        'is_featured' => $request->has('is_featured'),
     ]);
 
     $post->categories()->sync($request->category_id);
@@ -41,15 +45,19 @@ public function store(Request $request)
 }
 public function index(Request $request)
 {
-    $query = Post::with(['user','categories']);
+    
+    $query = Post::with(['user','categories','comments']);
 
     if ($request->search) {
-        $query->where('title', 'like', '%' . $request->search . '%');
+        $query->search($request->search);
     }
 
-    $posts = $query->paginate(3);
+    $featuredPosts = Post::where('is_featured', true)   ->get();
+ $recentPosts = Post::latest()->take(5)->get();
+ $latestComments = Comment::latest()  ->take(5)     ->get();
+    $posts = $query->paginate(4);
 
-    return view('posts.index', compact('posts'));
+    return view('posts.index', compact('posts', 'featuredPosts', 'recentPosts', 'latestComments'));
 }
 public function edit(Post $post)
 {
@@ -64,6 +72,7 @@ public function update(Request $request, Post $post)
         'title' => 'required',
         'content' => 'required',
         'user_id' => 'required',
+        'is_featured' => 'boolean',
     'category_id' => 'required|array',
 'category_id.*' => 'exists:categories,id',
 
@@ -75,6 +84,7 @@ public function update(Request $request, Post $post)
         'title' => $request->title,
         'content' => $request->content,
         'user_id' => $request->user_id,
+        'is_featured' => $request->has('is_featured'),
     ]);
 
     $post->categories()->sync($request->category_id);
@@ -84,8 +94,9 @@ public function update(Request $request, Post $post)
 }
 public function show(Post $post)
 {
+     $comments = $post->comments()   ->latest() ->paginate(1);
     $post->load(['user', 'categories']);
-    return view('posts.show', compact('post'));
+    return view('posts.show', compact('post', 'comments'));
 }
 public function destroy(Post $post)
 {

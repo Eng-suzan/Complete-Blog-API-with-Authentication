@@ -4,9 +4,12 @@ use App\Http\Controllers\PageController;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
+use App\models\Comment;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DashboardController;
 
 //   Route::get('/', function () {
 //     return view('welcome');
@@ -85,3 +88,8 @@ use App\Http\Controllers\PostController;
 Route::resource('posts', PostController::class);
 Route::get('/categories/{category}', [CategoryController::class, 'show'])
     ->name('categories.show');
+
+Route::post('/comments', [CommentController::class, 'store'])
+    ->name('comments.store');
+    Route::get('/dashboard',
+    [DashboardController::class,'index'])->name('dashboard.index');

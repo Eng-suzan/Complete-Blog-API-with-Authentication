@@ -45,6 +45,17 @@
 
                 </select>
             </div>
+            <div class="form-check">
+    <input
+        type="checkbox"
+        name="is_featured"
+        value="1"
+        class="form-check-input">
+
+    <label class="form-check-label">
+        Featured Post
+    </label>
+</div>
             <div class="mb-3">
                 <label>Category</label>
                 <select name="category_id[]" multiple class="form-control">

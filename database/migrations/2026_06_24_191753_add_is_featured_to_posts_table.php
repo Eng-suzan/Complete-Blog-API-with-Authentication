@@ -10,15 +10,14 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-{
-    Schema::table('posts', function (Blueprint $table) {
+    {
+        Schema::table('posts', function (Blueprint $table) {
+            //
+            $table->boolean('is_featured')
+              ->default(false);
 
-        if (Schema::hasColumn('posts', 'category_id')) {
-            $table->dropColumn('category_id');
-        }
-
-    });
-}
+        });
+    }
 
     /**
      * Reverse the migrations.
@@ -26,7 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            //
         });
     }
 };

@@ -12,7 +12,7 @@ class PostsSeeder extends Seeder
     {
         $categories = Category::all();
 
-        Post::factory(5)->create()->each(function ($post) use ($categories) {
+        Post::factory(20)->create()->each(function ($post) use ($categories) {
             $post->categories()->attach(
                 $categories->random(rand(1, 3))->pluck('id')->toArray()
             );
