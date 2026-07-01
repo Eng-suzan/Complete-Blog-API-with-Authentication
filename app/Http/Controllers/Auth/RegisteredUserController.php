@@ -10,11 +10,11 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
-use App\Http\Requests\RegisterRequest;
+
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Hash;
-
+use App\Rules\StrongPassword;
 use Illuminate\View\View;
 
 
@@ -38,15 +38,19 @@ class RegisteredUserController extends Controller
         $request->validate([
         'name' => ['required', 'string', 'max:255',"min:6"],
             'email' => ['required', 'string','lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ],[
-            "email.requierd"=>"kkkk"
-        ]
+            'password' => ['required', 'confirmed', new StrongPassword],
+            'avatar'   => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ],
         );
+        $avatarPath = null;
+    if ($request->hasFile('avatar')) {
+        $avatarPath = $request->file('avatar')->store('avatars', 'public');
+    }
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'avatar'   => $avatarPath
         ]);
 
         event(new Registered($user));

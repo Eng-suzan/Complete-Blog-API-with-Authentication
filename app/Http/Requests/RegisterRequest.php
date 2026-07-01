@@ -4,8 +4,8 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Password;
-
+use App\Rules\StrongPassword;
+use App\Rules\NoSpaces;
 class RegisterRequest extends FormRequest
 {
     /**
@@ -24,10 +24,18 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-           'name' => ['required', 'string', 'max:255',"min:6"],
+           'name' => ['required', 'string', 'max:255',"min:6",new NoSpaces],
             'email' => ['required', 'string','lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Password::defaults()],
-        
+            'password' => ['required', 'confirmed', new StrongPassword],
+             'avatar'=>['required','image','mimes:jpeg,png,jpg,gif', 'max:2048'],
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'email.unique' => 'هذا البريد الإلكتروني مسجل لدينا بالفعل.',
+            'avatar.max' => 'حجم الصورة يجب ألا يتعدى 2 ميجابايت.',
+        ];
+    }
+
 }

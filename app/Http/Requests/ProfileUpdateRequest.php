@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Requests;
+use App\Rules\NoSpaces;
 
 use App\Models\User;
+use Dom\NamespaceInfo;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+
 
 class ProfileUpdateRequest extends FormRequest
 {
@@ -17,7 +20,7 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255',new NoSpaces],
             'email' => [
                 'required',
                 'string',
@@ -25,7 +28,9 @@ class ProfileUpdateRequest extends FormRequest
                 'email',
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
-            ],
+            
+                ],
+                'avatar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }
 }
