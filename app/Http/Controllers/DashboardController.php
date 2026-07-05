@@ -18,14 +18,14 @@ class DashboardController extends Controller
 
         $featuredPostsCount = Post::where('is_featured', true)->count();
 
-        $recentPosts = Post::latest()   ->take(5)  ->get();
+        $recentPosts = Post::latest() ->take(5)  ->get();
 $latestComments = Comment::with('post')
     ->latest()
     ->take(5)
     ->get();
         $popularPosts = Post::withCount('comments') ->orderByDesc('comments_count') ->take(5)->get();
 
-        return view('dashboard.index', compact(
+        return view('dashboard_posts_categories.index', compact(
             'totalPosts',
             'totalCategories',
             'totalComments',

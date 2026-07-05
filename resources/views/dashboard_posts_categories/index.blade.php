@@ -4,7 +4,7 @@
 
 @section('content')
 
-<h2>Dashboard</h2>
+<h2>Dashboard(posts & categories)</h2>
 
 <div class="row">
 

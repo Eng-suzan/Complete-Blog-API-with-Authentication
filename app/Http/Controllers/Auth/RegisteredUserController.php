@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Rules\StrongPassword;
 use Illuminate\View\View;
 
-
+//use App\Events\UserRegistered;
 
 class RegisteredUserController extends Controller
 {
@@ -52,11 +52,11 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'avatar'   => $avatarPath
         ]);
-
+//event(new UserRegistered($user));
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('user.home')) ;
     }
 }

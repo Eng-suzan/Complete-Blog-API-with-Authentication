@@ -45,7 +45,7 @@
         </div>
         <div class="ms-auto">
     
-            <a href="{{ route('dashboard.index') }}"
+            <a href="{{ route('dashboard') }}"
                class="btn btn-light btn-sm me-2">
                 Dashboard
             </a>
@@ -56,7 +56,19 @@
                 Categories
             </a>
         </div>
+        <h6 class="text-light ms-auto me-3 mt-2">Welcome, {{ Auth::user()->name }}</h6>
+        <div class="ms-auto">
+    <a href="{{ route('profile.edit') }}" class="btn btn-light btn-sm me-2">Profile</a>
+</div>
+        <div>
+        <form method="POST" action="{{ route('logout') }}">
+    @csrf
+    <button type="submit">Logout</button>
+</form>
+
+        </div>
     </div>
+
 </nav>
 
 <div class="container py-5">
