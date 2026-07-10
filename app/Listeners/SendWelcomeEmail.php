@@ -1,14 +1,13 @@
 <?php
 
 namespace App\Listeners;
-
+use App\Mail\RegisterMail;
 use App\Events\UserRegistered;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\WelcomeMail;
-use App\Models\User;
-class SendWelcomeEmail
+
+class SendWelcomeEmail 
 {
     /**
      * Create the event listener.
@@ -23,7 +22,7 @@ class SendWelcomeEmail
      */
     public function handle(UserRegistered $event): void
     {
-         Mail::to($event->user->email)
-            ->send(new WelcomeMail($event->user));
+ Mail::to($event->user->email)
+        ->send(new RegisterMail($event->user));
     }
 }

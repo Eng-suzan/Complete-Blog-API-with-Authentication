@@ -5,21 +5,23 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use App\Models\User;
-class WelcomeMail extends Mailable
+
+class RegisterMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(public User $user)
+    public $user;
+    public function __construct($user)
     {
-       
+        $this->user = $user;
     }
 
     /**
@@ -28,7 +30,12 @@ class WelcomeMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Welcome Mail',
+            subject: 'Register Mail',
+            from: new Address("suzanreda639@gmail.com"),
+            cc:[
+                new Address("suzan1@gmail.com"),
+                new Address("suzan2@gmail.com"),
+            ]
         );
     }
 
@@ -38,7 +45,10 @@ class WelcomeMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.welcome',
+            view: 'emails.welcome_mail',
+            with: [
+                'name' => $this->user->name,
+            ],
         );
     }
 

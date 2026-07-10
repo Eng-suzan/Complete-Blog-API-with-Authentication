@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
 
-
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -15,9 +15,12 @@ use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Hash;
 use App\Rules\StrongPassword;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
+use App\Mail\RegisterMail;
 
-//use App\Events\UserRegistered;
+use App\Events\UserRegistered;
+
 
 class RegisteredUserController extends Controller
 {
@@ -33,16 +36,16 @@ class RegisteredUserController extends Controller
      * Handle an incoming registration request.
      */
    
-    public function store(Request $request): RedirectResponse
+    public function store(RegisterRequest $request): RedirectResponse
     {
-        $request->validate([
-        'name' => ['required', 'string', 'max:255',"min:6"],
-            'email' => ['required', 'string','lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', new StrongPassword],
-            'avatar'   => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ],
-        );
-        $avatarPath = null;
+        // $request->validate([
+        // 'name' => ['required', 'string', 'max:255',"min:6"],
+        //     'email' => ['required', 'string','lowercase', 'email', 'max:255', 'unique:'.User::class],
+        //     'password' => ['required', 'confirmed', new StrongPassword],
+        //     'avatar'   => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        // ],
+        // );
+       $avatarPath = null;
     if ($request->hasFile('avatar')) {
         $avatarPath = $request->file('avatar')->store('avatars', 'public');
     }
@@ -52,11 +55,12 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'avatar'   => $avatarPath
         ]);
-//event(new UserRegistered($user));
+
         event(new Registered($user));
 
         Auth::login($user);
-
-        return redirect(route('user.home')) ;
+        event(new UserRegistered($user));
+// Mail::to($user->email)->queue(new RegisterMail($user ));
+return redirect(route('user.home')) ;
     }
 }
