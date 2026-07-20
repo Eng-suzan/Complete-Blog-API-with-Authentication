@@ -1,28 +1,194 @@
 # Complete Blog API with Authentication
 
-A complete Blog REST API built with Laravel, providing authentication, authorization, and full CRUD operations for blog posts and categories.
+A RESTful Blog API built with **Laravel** that provides user authentication, authorization, and complete CRUD operations for posts and categories.
+
+---
 
 ## 🚀 Features
 
-- User Authentication using Laravel Sanctum
-- User Registration and Login
-- Token-based API Authentication
-- Create, Read, Update, Delete (CRUD) Posts
-- Create, Read, Update, Delete Categories
-- User Authorization (Users can manage their own posts)
-- Form Request Validation
-- API Resources for formatted responses
-- Image Upload for Posts
-- API Testing using Feature Tests
-- Clean API Response Structure
+* User Registration & Login
+* Token Authentication using **Laravel Sanctum**
+* User Logout
+* CRUD Operations for Posts
+* CRUD Operations for Categories
+* Image Upload for Posts
+* Form Request Validation
+* API Resources for JSON responses
+* Standardized API Response Helper
+* Feature Testing with PHPUnit
+* Automatic API Documentation using **Dedoc Scramble**
 
-## 🛠 Technologies
+---
 
-- Laravel
-- PHP
-- MySQL
-- Laravel Sanctum
-- REST API
-- PHPUnit
+## 🛠️ Technologies
+
+* Laravel
+* PHP
+* MySQL
+* Laravel Sanctum
+* Dedoc Scramble
+* PHPUnit
+* REST API
+
+---
 
 ## 📂 Project Structure
+
+```
+app/
+├── Helpers
+├── Http
+│   ├── Controllers
+│   │   └── API
+│   ├── Requests
+│   └── Resources
+├── Models
+
+database/
+└── migrations
+
+routes/
+└── api.php
+
+tests/
+└── Feature
+```
+
+---
+
+## ⚙️ Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/Eng-suzan/Complete-Blog-API-with-Authentication.git
+```
+
+Move into the project:
+
+```bash
+cd Complete-Blog-API-with-Authentication
+```
+
+Install dependencies:
+
+```bash
+composer install
+```
+
+Copy the environment file:
+
+```bash
+cp .env.example .env
+```
+
+Generate the application key:
+
+```bash
+php artisan key:generate
+```
+
+Configure your database credentials in the `.env` file, then run:
+
+```bash
+php artisan migrate
+```
+
+Start the development server:
+
+```bash
+php artisan serve
+```
+
+---
+
+## 🔐 Authentication Endpoints
+
+| Method | Endpoint        | Description         |
+| ------ | --------------- | ------------------- |
+| POST   | `/api/register` | Register a new user |
+| POST   | `/api/login`    | Login               |
+| POST   | `/api/logout`   | Logout              |
+
+---
+
+## 📝 Posts Endpoints
+
+| Method | Endpoint          | Description       |
+| ------ | ----------------- | ----------------- |
+| GET    | `/api/posts`      | Get all posts     |
+| GET    | `/api/posts/{id}` | Get a single post |
+| POST   | `/api/posts`      | Create a post     |
+| PUT    | `/api/posts/{id}` | Update a post     |
+| DELETE | `/api/posts/{id}` | Delete a post     |
+
+---
+
+## 📂 Categories Endpoints
+
+| Method | Endpoint               | Description           |
+| ------ | ---------------------- | --------------------- |
+| GET    | `/api/categories`      | Get all categories    |
+| GET    | `/api/categories/{id}` | Get a single category |
+| POST   | `/api/categories`      | Create a category     |
+| PUT    | `/api/categories/{id}` | Update a category     |
+| DELETE | `/api/categories/{id}` | Delete a category     |
+
+---
+
+## 💬 Comments
+
+The API supports creating comments through:
+
+```http
+POST /api/comments
+```
+
+---
+
+## 📖 API Documentation
+
+The project uses **Dedoc Scramble** to generate API documentation automatically.
+
+Open in your browser:
+
+```
+http://127.0.0.1:8000/docs/api
+```
+
+---
+
+## 🧪 Testing
+
+Run all tests:
+
+```bash
+php artisan test
+```
+
+Current Feature Tests include:
+
+* Get Posts API
+* Create Post API
+
+---
+
+## 🔒 Security
+
+* Laravel Sanctum Authentication
+* Protected API Routes
+* Authorization
+* Request Validation
+* Password Hashing
+
+---
+
+## 👩‍💻 Author
+
+**Suzan Reda**
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
