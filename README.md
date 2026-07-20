@@ -182,6 +182,22 @@ Current Feature Tests include:
 * Password Hashing
 
 ---
+## Screenshots
+
+### API Documentation
+
+![API Docs](<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4080983c-ca39-4664-b0b2-e8b135fc22a4" />
+)
+
+### Postman Testing
+
+![Postman](<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/3bb889d6-5635-4f07-9562-bf1edf2e696e" />
+)
+
+### Database
+
+![Database](<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/c8359f63-0fc8-4532-9797-292df1f7926a" />
+
 
 ## 👩‍💻 Author
 
