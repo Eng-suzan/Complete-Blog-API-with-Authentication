@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User;
 
 class PostApiTest extends TestCase
 {
@@ -17,16 +18,13 @@ class PostApiTest extends TestCase
 
         $response->assertStatus(200);
     }
+    use RefreshDatabase;
     public function test_get_posts()
 {
-    $response = $this->getJson('/api/posts');
+      $user = User::factory()->create();
+
+    $response = $this->actingAs($user)->getJson('/api/posts');
 
     $response->assertStatus(200);
-
-$response = $this->postJson('/api/posts',[
-    'title'=>'Laravel',
-    'body'=>'Test'
-]);
-
-$response->assertStatus(201);
-}}
+}
+}

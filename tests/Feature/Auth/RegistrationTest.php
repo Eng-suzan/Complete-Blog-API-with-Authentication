@@ -4,6 +4,7 @@ namespace Tests\Feature\Auth;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Http\UploadedFile;
 
 class RegistrationTest extends TestCase
 {
@@ -17,15 +18,17 @@ class RegistrationTest extends TestCase
     }
 
     public function test_new_users_can_register(): void
-    {
+    {   $fakeAvatar = \Illuminate\Http\UploadedFile::fake()->create('avatar.jpg', 100, 'image/jpeg');
+         
         $response = $this->post('/register', [
-            'name' => 'Test User',
+            'name' => 'TestUser',
             'email' => 'test@example.com',
-            'password' => 'password',
-            'password_confirmation' => 'password',
+            'password' => 'password123!',
+            'password_confirmation' => 'password123!',
+            'avatar' => $fakeAvatar,
         ]);
-
+$response->dumpSession();
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
-    }
+         $response->assertRedirect('/user/home');
+}
 }

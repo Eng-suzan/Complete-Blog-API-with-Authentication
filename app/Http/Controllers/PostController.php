@@ -55,7 +55,7 @@ public function index(Request $request)
     $featuredPosts = Post::where('is_featured', true)   ->get();
  $recentPosts = Post::latest()->take(5)->get();
  $latestComments = Comment::latest()  ->take(5)     ->get();
-    $posts = $query->paginate(4);
+    $posts = $query->paginate(10);
 
     return view('posts.index', compact('posts', 'featuredPosts', 'recentPosts', 'latestComments'));
 }
